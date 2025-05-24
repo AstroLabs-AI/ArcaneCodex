@@ -2,7 +2,8 @@
 
 ## Available JARs:
 
-- **`arcanecodex-0.2.0-noparticles.jar`** - ✅ WORKING VERSION - Particles temporarily disabled (USE THIS!)
+- **`arcanecodex-0.2.0-basic.jar`** - ✅ WORKING VERSION - Basic mod without GUIs/particles (USE THIS!)
+- **`arcanecodex-0.2.0-noparticles.jar`** - ❌ Crashes due to menu registration
 - **`arcanecodex-0.2.0-fixed2.jar`** - ❌ Still crashes due to particle timing issue
 - **`arcanecodex-0.2.0-fixed.jar`** - ❌ Has particle texture issues
 - **`arcanecodex-0.2.0.jar`** - ❌ Has particle registration issues
@@ -10,11 +11,11 @@
 
 ## For Players
 
-**USE THIS FILE:** `arcanecodex-0.2.0-noparticles.jar`
+**USE THIS FILE:** `arcanecodex-0.2.0-basic.jar`
 
 ### Installation:
 1. Make sure you have Minecraft Forge 1.20.1 (version 47.2.0 or higher)
-2. Copy `arcanecodex-0.2.0-noparticles.jar` to your Minecraft mods folder
+2. Copy `arcanecodex-0.2.0-basic.jar` to your Minecraft mods folder
 3. Launch Minecraft with Forge
 
 ## ⚠️ WARNING: About the Source JAR ⚠️

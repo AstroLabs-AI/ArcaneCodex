@@ -19,11 +19,15 @@ public class ClientSetup {
     
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
+        // Temporarily disable menu screen registration to fix crash
+        // TODO: Fix menu type registration timing issue
+        /*
         event.enqueueWork(() -> {
             MenuScreens.register(ModMenuTypes.RESEARCH_TREE.get(), ResearchTreeScreen::new);
             MenuScreens.register(ModMenuTypes.REALITY_COMPILER.get(), 
                 com.astrolabs.arcanecodex.client.gui.RealityCompilerScreen::new);
         });
+        */
     }
     
     // Temporarily disable particle registration to fix crash
