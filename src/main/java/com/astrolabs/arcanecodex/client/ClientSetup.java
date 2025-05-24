@@ -20,8 +20,7 @@ public class ClientSetup {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            MenuScreens.register(ModMenuTypes.RESEARCH_TREE.get(), (menu, inventory, title) -> 
-                new ResearchTreeScreen(inventory.player));
+            MenuScreens.register(ModMenuTypes.RESEARCH_TREE.get(), ResearchTreeScreen::new);
             MenuScreens.register(ModMenuTypes.REALITY_COMPILER.get(), 
                 com.astrolabs.arcanecodex.client.gui.RealityCompilerScreen::new);
         });

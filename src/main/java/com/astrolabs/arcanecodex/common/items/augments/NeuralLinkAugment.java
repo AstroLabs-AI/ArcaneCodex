@@ -15,12 +15,14 @@ public class NeuralLinkAugment extends AugmentItem {
     
     @Override
     protected void applyAugmentEffects(Player player, IConsciousness consciousness) {
-        consciousness.expandConsciousness(50);
+        // Increase neural charge capacity indirectly through consciousness level
+        consciousness.addNeuralCharge(50);
     }
     
     @Override
     protected void removeAugmentEffects(Player player, IConsciousness consciousness) {
-        consciousness.expandConsciousness(-50);
+        // Remove the neural charge boost
+        consciousness.consumeNeuralCharge(Math.min(50, consciousness.getNeuralCharge()));
     }
     
     @Override

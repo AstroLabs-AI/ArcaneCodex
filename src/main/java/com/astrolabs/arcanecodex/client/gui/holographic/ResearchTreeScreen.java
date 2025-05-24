@@ -12,17 +12,20 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ResearchTreeScreen extends Screen {
+public class ResearchTreeScreen extends AbstractContainerScreen<ResearchTreeMenu> {
     
     private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(ArcaneCodex.MOD_ID, "textures/gui/research_background.png");
     private static final ResourceLocation NODE_TEXTURE = new ResourceLocation(ArcaneCodex.MOD_ID, "textures/gui/research_node.png");
@@ -48,9 +51,11 @@ public class ResearchTreeScreen extends Screen {
     private ResearchNode selectedNode = null;
     private ResearchNode hoveredNode = null;
     
-    public ResearchTreeScreen(Player player) {
-        super(Component.literal("Research Tree"));
-        this.player = player;
+    public ResearchTreeScreen(ResearchTreeMenu menu, Inventory inventory, Component title) {
+        super(menu, inventory, title);
+        this.player = inventory.player;
+        this.imageWidth = 256;
+        this.imageHeight = 200;
     }
     
     @Override
@@ -65,9 +70,16 @@ public class ResearchTreeScreen extends Screen {
     
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(graphics, mouseX, mouseY);
+        
         // Update animation
         animationTicks += partialTicks;
-        
+    }
+    
+    @Override
+    protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         // Dark background
         graphics.fill(0, 0, width, height, 0xDD000000);
         
@@ -103,14 +115,12 @@ public class ResearchTreeScreen extends Screen {
         
         // Render 2D overlay
         renderOverlay(graphics, mouseX, mouseY);
-        
-        super.render(graphics, mouseX, mouseY, partialTicks);
     }
     
     private void renderSynapticLinks(PoseStack poseStack) {
         if (consciousness == null) return;
         
-        List<ResearchTree.SynapticLink> links = ResearchTree.getSynapticLinks(consciousness.getUnlockedResearch());
+        List<ResearchTree.SynapticLink> links = ResearchTree.getSynapticLinks(new ArrayList<>(consciousness.getUnlockedResearch()));
         
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         BufferBuilder buffer = Tesselator.getInstance().getBuilder();
@@ -139,7 +149,7 @@ public class ResearchTreeScreen extends Screen {
     private void renderResearchNodes(PoseStack poseStack, int mouseX, int mouseY) {
         if (consciousness == null) return;
         
-        List<ResourceLocation> unlocked = consciousness.getUnlockedResearch();
+        List<ResourceLocation> unlocked = new ArrayList<>(consciousness.getUnlockedResearch());
         hoveredNode = null;
         
         for (ResearchNode node : ResearchTree.getAllNodes()) {
@@ -288,6 +298,11 @@ public class ResearchTreeScreen extends Screen {
     }
     
     @Override
+    protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
+        // Labels are rendered in renderOverlay instead
+    }
+    
+    @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (button == 0) {
             dragging = true;
@@ -299,7 +314,7 @@ public class ResearchTreeScreen extends Screen {
                 
                 // Try to unlock research
                 if (!consciousness.getUnlockedResearch().contains(hoveredNode.getId()) &&
-                    hoveredNode.canUnlock(consciousness.getUnlockedResearch(), consciousness.getConsciousnessLevel())) {
+                    hoveredNode.canUnlock(new ArrayList<>(consciousness.getUnlockedResearch()), consciousness.getConsciousnessLevel())) {
                     
                     if (consciousness.getNeuralCharge() >= hoveredNode.getCost()) {
                         // Send unlock packet to server

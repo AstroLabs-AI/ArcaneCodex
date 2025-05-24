@@ -53,3 +53,35 @@ Key directories:
 - Use capabilities for player data storage
 - Follow the tier progression system (0-5)
 - Visual effects should reflect quantum state
+
+## Testing Commands
+
+- `./gradlew test` - Run unit tests
+- `./gradlew runData` - Generate data files (recipes, tags, etc.)
+
+## Key Implementation Details
+
+### Registry System
+All content is registered through dedicated registry classes:
+- `ModBlocks` - Block registration
+- `ModItems` - Item registration
+- `ModBlockEntities` - Tile entity registration
+- `ModMenuTypes` - GUI container registration
+- `ModParticles` - Particle effect registration
+- `ModCapabilities` - Capability registration
+
+### Network System
+- `ModNetworking` handles all packet registration
+- Packets are in `network.packets` package
+- Use for client-server sync of complex data
+
+### Data Generation
+- Recipes are JSON files in `src/main/resources/data/arcanecodex/recipes/`
+- Block states and models in `src/main/resources/assets/arcanecodex/`
+- Language files in `src/main/resources/assets/arcanecodex/lang/`
+
+### Current Development State
+- Phase 2 (Consciousness Systems) in progress
+- Core blocks and energy system implemented
+- RPL parser functional with basic commands
+- GUI systems and research tree pending implementation

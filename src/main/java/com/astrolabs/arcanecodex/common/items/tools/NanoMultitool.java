@@ -76,9 +76,11 @@ public class NanoMultitool extends DiggerItem {
         if (stack.getOrCreateTag().contains("BoundPlayer")) {
             Player player = getOwner(stack);
             if (player != null) {
-                player.getCapability(ModCapabilities.CONSCIOUSNESS).ifPresent(consciousness -> {
-                    speed *= (1.0F + consciousness.getConsciousnessLevel() * 0.1F);
-                });
+                final float baseSpeed = speed;
+                Float bonusSpeed = player.getCapability(ModCapabilities.CONSCIOUSNESS).map(consciousness -> 
+                    baseSpeed * (1.0F + consciousness.getConsciousnessLevel() * 0.1F)
+                ).orElse(baseSpeed);
+                return bonusSpeed;
             }
         }
         
@@ -87,13 +89,13 @@ public class NanoMultitool extends DiggerItem {
     
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!attacker.level.isClientSide && attacker instanceof Player player) {
+        if (!attacker.level().isClientSide && attacker instanceof Player player) {
             // Drain neural charge on hit for bonus damage
             player.getCapability(ModCapabilities.CONSCIOUSNESS).ifPresent(consciousness -> {
                 if (consciousness.consumeNeuralCharge(50)) {
-                    target.hurt(player.level.damageSources().magic(), 2.0F);
+                    target.hurt(player.level().damageSources().magic(), 2.0F);
                     // Add visual effect
-                    player.level.broadcastEntityEvent(target, (byte) 20);
+                    player.level().broadcastEntityEvent(target, (byte) 20);
                 }
             });
         }

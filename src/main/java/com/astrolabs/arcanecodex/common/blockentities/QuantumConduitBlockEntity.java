@@ -45,9 +45,9 @@ public class QuantumConduitBlockEntity extends BlockEntity {
     
     private void balanceEnergy() {
         for (IQuantumEnergy.EnergyType type : IQuantumEnergy.EnergyType.values()) {
-            long totalEnergy = energyStorage.getEnergyStored(type);
+            final long[] totalEnergyArray = {energyStorage.getEnergyStored(type)};
             Map<Direction, Long> connectedEnergy = new HashMap<>();
-            int connectedCount = 1; // Include self
+            final int[] connectedCountArray = {1}; // Include self
             
             // Gather energy levels from all connected blocks
             for (Direction direction : Direction.values()) {
@@ -57,12 +57,15 @@ public class QuantumConduitBlockEntity extends BlockEntity {
                         if (energy.canReceive(direction.getOpposite(), type) || energy.canExtract(direction.getOpposite(), type)) {
                             long stored = energy.getEnergyStored(type);
                             connectedEnergy.put(direction, stored);
-                            totalEnergy += stored;
-                            connectedCount++;
+                            totalEnergyArray[0] += stored;
+                            connectedCountArray[0]++;
                         }
                     });
                 }
             }
+            
+            long totalEnergy = totalEnergyArray[0];
+            int connectedCount = connectedCountArray[0];
             
             if (connectedCount > 1) {
                 // Calculate average energy per connection

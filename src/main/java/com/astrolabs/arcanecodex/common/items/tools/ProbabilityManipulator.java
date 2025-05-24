@@ -15,6 +15,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -55,7 +56,19 @@ public class ProbabilityManipulator extends Item {
     }
     
     @Override
-    public void releaseUsing(ItemStack stack, Level level, Player player, int timeLeft) {
+    public void onUseTick(Level level, LivingEntity entity, ItemStack stack, int remainingUseDuration) {
+        // Visual feedback while charging
+        if (level.isClientSide && entity instanceof Player) {
+            int chargeTime = this.getUseDuration(stack) - remainingUseDuration;
+            if (chargeTime % 10 == 0) {
+                // Spawn charging particles
+            }
+        }
+    }
+    
+    @Override
+    public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
+        if (!(entity instanceof Player player)) return;
         int chargeTime = this.getUseDuration(stack) - timeLeft;
         
         if (chargeTime >= CHARGE_TIME && !level.isClientSide) {
@@ -66,13 +79,13 @@ public class ProbabilityManipulator extends Item {
             player.getCapability(ModCapabilities.CONSCIOUSNESS).ifPresent(consciousness -> {
                 int cost = (int)(50 * charge);
                 if (consciousness.getNeuralCharge() >= cost) {
-                    consciousness.addNeuralCharge(-cost);
+                    consciousness.consumeNeuralCharge(cost);
                     
                     // Apply probability manipulation
                     applyProbabilityManipulation(level, player, charge);
                     
                     // Damage item
-                    stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
+                    stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
                     
                     // Cooldown
                     player.getCooldowns().addCooldown(this, COOLDOWN);

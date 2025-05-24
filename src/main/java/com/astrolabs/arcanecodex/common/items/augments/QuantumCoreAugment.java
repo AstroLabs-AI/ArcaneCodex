@@ -15,12 +15,14 @@ public class QuantumCoreAugment extends AugmentItem {
     
     @Override
     protected void applyAugmentEffects(Player player, IConsciousness consciousness) {
-        consciousness.expandConsciousness(100);
+        // Increase max neural charge by modifying consciousness level
+        consciousness.setConsciousnessLevel(consciousness.getConsciousnessLevel() + 1);
     }
     
     @Override
     protected void removeAugmentEffects(Player player, IConsciousness consciousness) {
-        consciousness.expandConsciousness(-100);
+        // Decrease consciousness level
+        consciousness.setConsciousnessLevel(Math.max(0, consciousness.getConsciousnessLevel() - 1));
     }
     
     @Override

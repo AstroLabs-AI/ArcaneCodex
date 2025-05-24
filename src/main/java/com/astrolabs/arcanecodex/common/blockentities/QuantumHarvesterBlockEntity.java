@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -57,7 +58,7 @@ public class QuantumHarvesterBlockEntity extends BlockEntity implements MenuProv
                 
                 // Spawn particles on harvest
                 if (level.random.nextFloat() < 0.8f) {
-                    level.sendParticles(
+                    ((ServerLevel)level).sendParticles(
                         com.astrolabs.arcanecodex.common.particles.ModParticles.QUANTUM_ENERGY.get(),
                         pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5,
                         5, 0.25, 0.25, 0.25, 0.05
@@ -79,7 +80,7 @@ public class QuantumHarvesterBlockEntity extends BlockEntity implements MenuProv
     
     private void harvestQuantumEnergy() {
         // Harvest different types based on environment
-        long skyLight = level.getBrightness(worldPosition.above());
+        int skyLight = level.getBrightness(net.minecraft.world.level.LightLayer.SKY, worldPosition.above());
         
         if (skyLight > 10) {
             // Daytime - harvest Coherent Light

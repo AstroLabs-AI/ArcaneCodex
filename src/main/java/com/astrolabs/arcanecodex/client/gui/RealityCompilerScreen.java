@@ -41,8 +41,8 @@ public class RealityCompilerScreen extends AbstractContainerScreen<RealityCompil
         // Code editor
         this.codeEditor = new MultiLineEditBox(this.font, 
             leftPos + 8, topPos + 20, 160, 100, 
-            Component.literal("Enter RPL code..."));
-        this.codeEditor.setMaxLength(2000);
+            Component.literal("Enter RPL code..."), Component.literal("Code Editor"));
+        this.codeEditor.setCharacterLimit(2000);
         this.codeEditor.setValue(String.join("\n", menu.getBlockEntity().getCodeLines()));
         this.addRenderableWidget(this.codeEditor);
         
@@ -137,7 +137,9 @@ public class RealityCompilerScreen extends AbstractContainerScreen<RealityCompil
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (keyCode == GLFW.GLFW_KEY_TAB && this.codeEditor.isFocused()) {
-            this.codeEditor.insertText("  ");
+            // Insert spaces
+            String currentValue = this.codeEditor.getValue();
+            this.codeEditor.setValue(currentValue + "  ");
             return true;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);

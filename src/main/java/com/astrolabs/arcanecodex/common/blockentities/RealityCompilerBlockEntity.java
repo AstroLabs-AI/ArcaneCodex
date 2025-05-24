@@ -258,4 +258,8 @@ public class RealityCompilerBlockEntity extends BlockEntity implements MenuProvi
     public boolean isExecuting() {
         return executing;
     }
+    
+    public IQuantumEnergy getEnergyStorage() {
+        return energyStorage;
+    }
 }

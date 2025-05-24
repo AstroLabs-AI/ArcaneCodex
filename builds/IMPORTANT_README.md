@@ -1,48 +1,47 @@
-# IMPORTANT: About the JAR Files
+# IMPORTANT: JAR Files in this Directory
 
-## The Issue
-The JAR file `arcanecodex-1.20.1-0.3.0-source.jar` is a **source code archive**, not a compiled mod. It cannot be loaded by Minecraft Forge because it contains `.java` files instead of compiled `.class` files.
+## Available JARs:
 
-## Error You're Seeing
+- **`arcanecodex-0.2.0.jar`** - ✅ The compiled mod JAR ready for Minecraft
+- **`arcanecodex-1.20.1-0.3.0-source.jar`** - ❌ Source code JAR (NOT for gameplay)
+
+## For Players
+
+**USE THIS FILE:** `arcanecodex-0.2.0.jar`
+
+### Installation:
+1. Make sure you have Minecraft Forge 1.20.1 (version 47.2.0 or higher)
+2. Copy `arcanecodex-0.2.0.jar` to your Minecraft mods folder
+3. Launch Minecraft with Forge
+
+## ⚠️ WARNING: About the Source JAR ⚠️
+
+The file `arcanecodex-1.20.1-0.3.0-source.jar` is a **source code archive**, not a compiled mod. It cannot be loaded by Minecraft Forge because it contains `.java` files instead of compiled `.class` files.
+
+### Error You'll See If You Use the Wrong JAR:
 ```
 [FATAL]: The Mod File has mods that were not found
 ```
-This happens because Forge is looking for compiled class files, specifically `com.astrolabs.arcanecodex.ArcaneCodex.class`.
 
-## How to Build a Working Mod
+## Building from Source
 
-### Option 1: Use Forge MDK (Recommended)
-1. Download Minecraft Forge MDK for 1.20.1
-2. Copy the `src` folder from this project
-3. Fix the compilation errors (see BUILD_FIXES.md)
-4. Run `./gradlew build`
+If you want to build the mod yourself:
 
-### Option 2: Quick Fix for Testing
-1. The mod has API compatibility issues with MC 1.20.1
-2. Main issues:
-   - `Material` class removed (use `BlockBehaviour.Properties.copy()`)
-   - `entity.level` is now `entity.level()`
-   - GUI constructors changed
-   - Various other API changes
+1. Clone the repository
+2. Run `./gradlew build`
+3. The compiled JAR will be in `build/libs/`
+4. Use the JAR without "-source" in the name
 
-## What's In This JAR
-- Complete source code for all 3 phases
-- 41+ Java source files
+## For Developers
+
+The source JAR (`arcanecodex-1.20.1-0.3.0-source.jar`) contains:
+- Complete source code for all systems
+- 40+ Java source files
 - All recipes, lang files, and resources
-- Full implementation of:
+- Implementation of:
   - Quantum Energy System
   - Consciousness System
   - Reality Programming Language
-  - Quantum Mechanics
   - All blocks, items, and GUIs
 
-## For Developers
-This source code demonstrates advanced Minecraft modding concepts:
-- Custom energy systems
-- Capability systems
-- Complex GUIs
-- Particle effects
-- Network packets
-- Multi-block structures
-
-The code is well-structured and can serve as a reference for implementing similar systems.
+This source code demonstrates advanced Minecraft modding concepts and can serve as a reference for implementing similar systems.

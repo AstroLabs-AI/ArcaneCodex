@@ -99,6 +99,8 @@ public class ResearchNode {
     public ItemStack getIcon() { return icon; }
     public int getRequiredLevel() { return requiredLevel; }
     public int getNeuralCost() { return neuralCost; }
+    public int getTier() { return requiredLevel; } // Tier is same as required level
+    public int getCost() { return neuralCost; } // Cost is the neural cost
     public ResearchCategory getCategory() { return category; }
     public float getX() { return x; }
     public float getY() { return y; }
