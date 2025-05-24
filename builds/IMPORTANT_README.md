@@ -2,16 +2,17 @@
 
 ## Available JARs:
 
-- **`arcanecodex-0.2.0.jar`** - ✅ The compiled mod JAR ready for Minecraft
+- **`arcanecodex-0.2.0-fixed.jar`** - ✅ The FIXED compiled mod JAR ready for Minecraft (USE THIS!)
+- **`arcanecodex-0.2.0.jar`** - ⚠️ Has particle registration issues
 - **`arcanecodex-1.20.1-0.3.0-source.jar`** - ❌ Source code JAR (NOT for gameplay)
 
 ## For Players
 
-**USE THIS FILE:** `arcanecodex-0.2.0.jar`
+**USE THIS FILE:** `arcanecodex-0.2.0-fixed.jar`
 
 ### Installation:
 1. Make sure you have Minecraft Forge 1.20.1 (version 47.2.0 or higher)
-2. Copy `arcanecodex-0.2.0.jar` to your Minecraft mods folder
+2. Copy `arcanecodex-0.2.0-fixed.jar` to your Minecraft mods folder
 3. Launch Minecraft with Forge
 
 ## ⚠️ WARNING: About the Source JAR ⚠️
