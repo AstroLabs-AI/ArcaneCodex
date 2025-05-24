@@ -26,6 +26,9 @@ public class ClientSetup {
         });
     }
     
+    // Temporarily disable particle registration to fix crash
+    // TODO: Fix particle registration timing issue
+    /*
     @SubscribeEvent
     public static void registerParticles(RegisterParticleProvidersEvent event) {
         // Register particle factories - the particles should be registered by now
@@ -34,4 +37,5 @@ public class ClientSetup {
         event.registerSpriteSet(ModParticles.HOLOGRAPHIC.get(), HolographicParticle.Factory::new);
         event.registerSpriteSet(ModParticles.REALITY_GLITCH.get(), QuantumParticle.Factory::new);
     }
+    */
 }
