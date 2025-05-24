@@ -28,10 +28,10 @@ public class ClientSetup {
     
     @SubscribeEvent
     public static void registerParticles(RegisterParticleProvidersEvent event) {
+        // Register particle factories - the particles should be registered by now
         event.registerSpriteSet(ModParticles.QUANTUM_ENERGY.get(), QuantumParticle.Factory::new);
         event.registerSpriteSet(ModParticles.NEURAL_SPARK.get(), NeuralSparkParticle.Factory::new);
         event.registerSpriteSet(ModParticles.HOLOGRAPHIC.get(), HolographicParticle.Factory::new);
-        // Reality glitch particle uses quantum particle with different behavior
         event.registerSpriteSet(ModParticles.REALITY_GLITCH.get(), QuantumParticle.Factory::new);
     }
 }
